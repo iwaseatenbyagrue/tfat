@@ -3,12 +3,15 @@ import tfat.password as pw
 
 def test_get_random_ints():
     n = 16
-    firstpw = pw.get_random_ints(n,0,10)
-    assert firstpw != pw.get_random_ints(n,0,10)
+    firstpw = pw.get_random_ints(n, 0, 10)
+    assert firstpw != pw.get_random_ints(n, 0, 10)
     assert max(firstpw) < 11
     assert min(firstpw) > -1
     # There is a small chance this could fail randomly
     assert firstpw.count(firstpw[n-2]) < n
+    # Ensure negative numbers are converted to positive
+    assert len(pw.get_random_ints(-1)) == 1
+
 
 def test_get_random_string():
     n = 16
@@ -18,4 +21,3 @@ def test_get_random_string():
     assert len(firstpw) == n * 2
     # There is a small chance this could fail randomly
     assert firstpw.count(firstpw[n-2]) < n
-    
