@@ -8,7 +8,8 @@ from click_plugins import with_plugins
 @with_plugins(iter_entry_points('{}.plugins'.format(__package__)))
 @click.group()
 @click.version_option()
+@click.help_option()
 def base():
-    """ tfat 0.1
+    """ tfat - a tool for automating things.
     """
     pass
