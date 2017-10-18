@@ -45,12 +45,11 @@ def get_random_string(n, encoding='hex'):
 
 def get_random_characters_from_class(n, character_class):
 
-    return map(
+    return [
         _sysrandom.choice(
             character_class_map.get(character_class, "all")
-        ),
-        range(0, n)
-    )
+        ) for x in range(0, n)
+    ]
 
 
 def get_random_string_from_rules(n, printable=True, rules={}):
@@ -59,22 +58,20 @@ def get_random_string_from_rules(n, printable=True, rules={}):
         return None
 
     pw = []
-
     for rule, count in rules.items():
-        pw.append(get_random_characters_from_class(count, rules))
+        pw.extend(get_random_characters_from_class(count, rule))
 
     if len(pw) == n:
         return pw
 
-    char_pool = sum(map(character_class_map.get, rules), [])
+    char_pool = "".join(map(character_class_map.get, rules))
 
     if not char_pool:
         char_pool = character_class_map.get(
                         "all" if not printable else "printable"
                     )
-
     pw.extend(
-        [_sysrandom.choice(char_pool) for x in range(n - len(pw) + 1)]
+        [_sysrandom.choice(char_pool) for x in range(n - len(pw))]
     )
 
-    return pw
+    return "".join(pw)
