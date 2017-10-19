@@ -16,5 +16,7 @@ setup(
     entry_points='''
 [console_scripts]
 tfat=tfat.cli:base
+[tfat.plugins]
+password=plugins.password:cli
     '''
 )
