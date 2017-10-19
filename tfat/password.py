@@ -39,8 +39,8 @@ def get_random_string(n, encoding='hex'):
     :returns: A string obtained by encoding n bytes.
     """
     return "".join(
-            map(chr, get_random_ints(n, start=0, stop=255))
-        ).encode(encoding)
+        map(chr, get_random_ints(n, start=0, stop=255))
+    ).encode(encoding)
 
 
 def get_random_characters_from_class(n, character_class):
@@ -57,6 +57,8 @@ def get_random_string_from_rules(n, printable=True, rules={}):
     if sum(rules.values()) > n:
         return None
 
+    rules = dict(filter(lambda pair: pair[1] > 0, rules.items()))
+
     pw = []
     for rule, count in rules.items():
         pw.extend(get_random_characters_from_class(count, rule))
@@ -64,14 +66,19 @@ def get_random_string_from_rules(n, printable=True, rules={}):
     if len(pw) == n:
         return pw
 
-    char_pool = "".join(map(character_class_map.get, rules))
+    char_pool = "".join(
+        filter(bool,  map(character_class_map.get, rules))
+    )
 
     if not char_pool:
         char_pool = character_class_map.get(
-                        "all" if not printable else "printable"
-                    )
+            "all" if not printable else "printable"
+        )
+
     pw.extend(
         [_sysrandom.choice(char_pool) for x in range(n - len(pw))]
     )
+
+    _sysrandom.shuffle(pw)
 
     return "".join(pw)
