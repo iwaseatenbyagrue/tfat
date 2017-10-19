@@ -20,6 +20,7 @@ def test_get_random_string():
     assert firstpw != pw.get_random_string(n)
     # hex encoded should be double the byte size
     assert len(firstpw) == n * 2
+    assert len(firstpw) != len(pw.get_random_string(n, "base64"))
     # There is a small chance this could fail randomly
     assert firstpw.count(firstpw[n-2]) < n
 
