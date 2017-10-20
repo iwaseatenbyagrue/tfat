@@ -1,0 +1,7 @@
+before_script:
+    - virtualenv venv
+    - source venv/bin/activate && pip install -u -e .[tests]
+
+test:
+  script:
+    - source venv/bin/activate && python setup.py test
