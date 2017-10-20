@@ -72,6 +72,12 @@ class Pipeline(object):
         for arg in args:
             self._queue.put(arg)
 
+    def get_context(self):
+        """ Return a view of the pipeline's context.
+        """
+
+        return self._context.viewitems()
+
     def _worker(self, tasks=[], callbacks=[]):
 
         """
@@ -91,13 +97,13 @@ class Pipeline(object):
                 try:
                     for task in tasks:
                         data = task(
-                            data, context=self._context.viewitems()
+                            data, context=self.get_context()
                         )
                 except:
                     err = sys.exc_info()
 
                 for cb in callbacks:
-                    cb(data, err, self)
+                    cb(data, err, self.get_context())
 
                 self._queue.task_done()
                 self.logger.debug(
