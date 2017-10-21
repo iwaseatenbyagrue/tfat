@@ -1,5 +1,7 @@
 import click
+import tfat.options as stdopts
 import yaml
+
 
 from .downloader import PodcastDownloader
 from logging import StreamHandler
@@ -15,18 +17,9 @@ def cli():
 
 
 @cli.command()
-@click.option(
-    "-r", "--root", help="Root directory",
-    type=click.Path(resolve_path=True, file_okay=False), default="."
-)
-@click.option(
-    "-c", "--config", type=click.File('rb'),
-    help="Configuration file to get feeds from"
-)
-@click.option(
-    "-t", "--threads", default=4, type=int,
-    help="Number of threads to use"
-)
+@stdopts.config_option()
+@stdopts.threads_option()
+@stdopts.root_dir_option()
 @click.option(
     "-D", "--debug", is_flag=True,
     help="Enable debug logging"
@@ -52,8 +45,7 @@ def download(url, root, config, threads, debug):
         map(worker.parse_feed, url)
 
     if config:
-        cfg = yaml.load(config)
-        for feed in cfg['feeds']:
+        for feed in config['feeds']:
             worker.parse_feed(**feed)
 
     worker.join()
