@@ -18,12 +18,9 @@ def cli():
 
 @cli.command()
 @stdopts.config_option()
-@stdopts.threads_option()
+@stdopts.debug_option()
 @stdopts.root_dir_option()
-@click.option(
-    "-D", "--debug", is_flag=True,
-    help="Enable debug logging"
-)
+@stdopts.threads_option()
 @click.argument(
     "url", nargs=-1, metavar="URL", type=str
 )
