@@ -11,6 +11,8 @@ setup(
        "Click",
         "click-plugins",
         "marshmallow",
+        "feedparser",
+        "pyYAML"
     ],
     extras_require={u'tests': [u'pytest', u'pytest-runner', u'pytest-pep8', u'pytest-cov']},
     entry_points='''
@@ -18,5 +20,6 @@ setup(
 tfat=tfat.cli:base
 [tfat.plugins]
 password=plugins.password:cli
+podcast=plugins.podcast:cli
     '''
 )
