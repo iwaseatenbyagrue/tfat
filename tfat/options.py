@@ -15,12 +15,13 @@ def config_option(*args, **kwargs):
     attrs = {
         "type": click.File("rb"),
         "help": "YAML config file to load",
-        "callback": load_config
+        "callback": load_config,
+        "cls": click.Option
     }
 
     attrs.update(kwargs)
 
-    if not args and attrs.get('cls', click.Option) == click.Option:
+    if not args and attrs.get("cls") == click.Option:
         args = ["--config", "-c"]
 
     return click.option(*args, **attrs)
@@ -31,17 +32,19 @@ def root_dir_option(*args, **kwargs):
     attrs = {
         "help": "Root directory (default is current directory)",
         "type": click.Path(resolve_path=True, file_okay=False),
-        "default": "."
+        "default": ".",
+        "cls": click.Option
     }
 
-    if not args and attrs.get('cls', click.Option) == click.Option:
+    attrs.update(kwargs)
+
+    if not args and attrs.get("cls") == click.Option:
         args = ["-r", "--root"]
 
     return click.option(*args, **attrs)
 
 
 def threads_option(*args, **kwargs):
-
 
     attrs = {
         "help": "Number of threads to use",
@@ -56,13 +59,15 @@ def threads_option(*args, **kwargs):
     return click.option(*args, **attrs)
 
 
-
 def debug_option(*args, **kwargs):
 
     attrs = {
         "help": "Enable debug logging",
         "is_flag": True,
+        "cls": click.Option
     }
+
+    attrs.update(kwargs)
 
     def set_tfat_logging(ctx, param, value):
         if not value or ctx.resilient_parsing:
@@ -72,8 +77,7 @@ def debug_option(*args, **kwargs):
             logger.setLevel(-1)
         return value
 
-    if not args and attrs.get('cls', click.Option) == click.Option:
+    if not args and attrs.get('cls') == click.Option:
         args = ["-D", "--debug"]
 
     return click.option(*args, **attrs)
-
