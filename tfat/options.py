@@ -30,7 +30,7 @@ def config_option(*args, **kwargs):
 def root_dir_option(*args, **kwargs):
 
     attrs = {
-        "help": "Root directory (default is current directory)",
+        "help": "Root directory",
         "type": click.Path(resolve_path=True, file_okay=False),
         "default": ".",
         "cls": click.Option
