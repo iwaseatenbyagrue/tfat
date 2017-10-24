@@ -1,17 +1,17 @@
 import click
 import tfat.options as stdopts
-import yaml
 
 
 from .downloader import PodcastDownloader
 from logging import StreamHandler
+from os.path import expanduser
 from tfat.pipeline import Pipeline
 from tfat.logger import get_handler_with_default_formatter
 
-
-@click.group("podcast")
+@click.group("download")
+@click.version_option(version="0.1", prog_name="tfat-download")
 def cli():
-    """ tfat-podcast 0.1 - build and update a podcast collection.
+    """ Build and update a podcast collection.
     """
     pass
 
@@ -19,12 +19,12 @@ def cli():
 @cli.command()
 @stdopts.config_option()
 @stdopts.debug_option()
-@stdopts.root_dir_option()
+@stdopts.root_dir_option(default=expanduser("~/Podcasts"), show_default=True)
 @stdopts.threads_option()
 @click.argument(
     "url", nargs=-1, metavar="URL", type=str
 )
-def download(url, root, config, threads, debug):
+def podcast(url, root, config, threads, debug):
     """ Download (missing) episodes of podcasts.
     """
 
