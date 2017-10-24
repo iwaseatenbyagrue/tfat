@@ -3,8 +3,9 @@ import tfat.password as pw
 
 
 @click.group("password")
+@click.version_option(version="0.1", prog_name="tfat-password")
 def cli():
-    """ tfat-password 0.1 - a simple set of tools for generating passwords
+    """ A simple set of tools for generating passwords.
     """
     pass
 
