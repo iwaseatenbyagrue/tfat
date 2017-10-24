@@ -11,8 +11,9 @@ setup(
        "Click",
         "click-plugins",
         "marshmallow",
+        "pyYAML",
         "feedparser",
-        "pyYAML"
+        "paho-mqtt"
     ],
     extras_require={u'tests': [u'pytest', u'pytest-runner', u'pytest-pep8', u'pytest-cov']},
     entry_points='''
@@ -20,6 +21,6 @@ setup(
 tfat=tfat.cli:base
 [tfat.plugins]
 password=plugins.password:cli
-podcast=plugins.podcast:cli
+download=plugins.download:cli
     '''
 )
