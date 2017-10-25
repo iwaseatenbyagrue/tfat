@@ -34,9 +34,16 @@ class PodcastDownloader(Pipeline):
             self.logger.debug("data: {}".format(data))
 
         else:
-            self.logger.info(
-                "completed {}".format(data["destination"])
-            )
+            if 'req' not in data:
+                self.logger.debug(
+                    "skipped existing file: {}".format(
+                        data["destination"]
+                    )
+                )
+            else:
+                self.logger.info(
+                    "completed {}".format(data["destination"])
+                )
 
     @property
     def tasks(self):
