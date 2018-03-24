@@ -1,8 +1,9 @@
 import click
 import tfat.password as pw
 
+from tfat.cli_utils import AliasedGroup
 
-@click.group("password")
+@click.group("password", cls=AliasedGroup)
 @click.version_option(version="0.1", prog_name="tfat-password")
 def cli():
     """ A simple set of tools for generating passwords.

@@ -1,14 +1,14 @@
 import click
 import tfat.options as stdopts
 
-
 from .downloader import PodcastDownloader
 from logging import StreamHandler
 from os.path import expanduser
+from tfat.cli_utils import AliasedGroup
 from tfat.pipeline import Pipeline
 from tfat.logger import get_handler_with_default_formatter
 
-@click.group("download")
+@click.group("download", cls=AliasedGroup)
 @click.version_option(version="0.1", prog_name="tfat-download")
 def cli():
     """ Build and update a podcast collection.
