@@ -20,7 +20,7 @@ setup(
 [console_scripts]
 tfat=tfat.cli:base
 [tfat.plugins]
-password=plugins.password:cli
-download=plugins.download:cli
+password=tfat.plugins.password:cli
+download=tfat.plugins.download:cli
     '''
 )
